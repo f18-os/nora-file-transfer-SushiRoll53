@@ -35,7 +35,7 @@ class ServerThread(Thread):
         self.start()
     def run(self):
         global lock
-        while True:
+        while True: 
             msg = self.fsock.receivemsg()
             if not msg:
                 if True: print(self.fsock, "server thread done")
@@ -48,11 +48,11 @@ class ServerThread(Thread):
             msg = ("%s! (%d)" % (msg, requestNum)).encode()
             self.fsock.sendmsg(msg)
             spl = isAFileName.split("$")
-            if spl[0] == "NOF":
-             if not os.path.isfile("serverFiles/"+spl[1]):
+            if spl[0] == "NOF": # If the send message is Name Of File
+             if not os.path.isfile("serverFiles/"+spl[1]): #Check if file is in server already
               self.fsock.sendmsg(b"good to go")
               fileName = spl[1]
-              with open("serverFiles/"+fileName,"wb") as file:
+              with open("serverFiles/"+fileName,"wb") as file: #Creates the new file to allocate
                print("Allocating file "+fileName)
                while True:
                	data = self.fsock.receivemsg()
@@ -61,7 +61,7 @@ class ServerThread(Thread):
                	file.write(data)
                	self.fsock.sendmsg(data)
              else:
-               self.fsock.sendmsg(b"FIS$")
+               self.fsock.sendmsg(b"FIS$") #Return file in server if it is
 
 
 while True:

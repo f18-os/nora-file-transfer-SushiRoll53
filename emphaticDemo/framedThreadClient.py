@@ -12,7 +12,7 @@ switchesVarDefaults = (
     (('-s', '--server'), 'server', "localhost:50001"),
     (('-d', '--debug'), "debug", False), # boolean (set if present)
     (('-?', '--usage'), "usage", False), # boolean (set if present)
-    (('-p', '--put'), "put", "default"),
+    (('-p', '--put'), "put", "default"), # Implemented put
     )
 
 
@@ -73,7 +73,7 @@ class ClientThread(Thread):
        #fs.sendmsg(b"hello world")
        #print("received:", fs.receivemsg())
 
-       if os.path.isfile(fileName):
+       if os.path.isfile(fileName): # Start sending a file if it exists
        	print(fileName)
        	fr = open(fileName,"rb")
        	print("sending ",fileName)
@@ -82,10 +82,10 @@ class ClientThread(Thread):
        	print("received:", fs.receivemsg())
        	fileInServer = fs.receivemsg().decode()
        	spl = fileInServer.split("$")
-       	if spl[0] == "FIS": # File Is in Server
+       	if spl[0] == "FIS": # File In Server
        	 print("file already in server")
        	else:
-       	 while True:
+       	 while True: # Start sending the content of the file
        	  reading = fr.read(100)
        	  while reading:
        	   print("sending ",(reading))
