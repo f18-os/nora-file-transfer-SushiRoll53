@@ -95,6 +95,6 @@ class ClientThread(Thread):
        	  fr.close()
        	  break
 
-for i in range(100):
+for i in range(2):
     ClientThread(serverHost, serverPort, debug)
 
